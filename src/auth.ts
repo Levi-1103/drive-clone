@@ -12,4 +12,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             clientId: env.AUTH_GITHUB_ID, clientSecret: env.AUTH_GITHUB_SECRET
         })
     ],
+
+
 })

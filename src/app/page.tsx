@@ -25,7 +25,6 @@ export default async function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="flex gap-4 items-center flex-col">
           <h1>Drive Clone</h1>
-          <SignOut />
           <Avatar>
             <AvatarImage src={session.user?.image || ""} />
             <AvatarFallback>Avatar</AvatarFallback>
