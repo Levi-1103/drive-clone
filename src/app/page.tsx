@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
-import SignIn, { SignOut } from "@/components/sign-in";
+import { SignIn } from "@/components/sign-in";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button"
 
