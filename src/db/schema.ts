@@ -98,3 +98,12 @@ export const authenticators = pgTable(
         },
     ]
 )
+
+export const files_table = pgTable("files_table", {
+    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    ownerId: text("owner_id").notNull(),
+    name: text("name").notNull(),
+    size: integer("size").notNull(),
+    url: text("url").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow()
+});
