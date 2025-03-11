@@ -29,18 +29,12 @@ export default function Page() {
         if (response.ok) {
             const { url, fields } = await response.json()
 
-            // console.log(url, fields)
 
             const formData = new FormData()
             Object.entries(fields).forEach(([key, value]) => {
                 formData.append(key, value as string)
             })
             formData.append('file', file)
-
-
-            // for (const value of formData.values()) {
-            //     console.log(value);
-            // }
 
 
             for (const pair of formData.entries()) {

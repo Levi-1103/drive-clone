@@ -10,6 +10,11 @@ export const env = createEnv({
         AUTH_GITHUB_ID: z.string(),
         AUTH_GITHUB_SECRET: z.string(),
         DATABASE_URL: z.string().url(),
+        S3_ACCESS_KEY_ID: z.string(),
+        S3_SECRET_ACCESS_KEY: z.string(),
+        S3_ENDPOINT: z.string().url(),
+        S3_REGION: z.string(),
+
         NODE_ENV: z
             .enum(["development", "test", "production"])
             .default("development"),

@@ -1,3 +1,4 @@
+import { env } from "@/env/server"
 import { S3Client } from "@aws-sdk/client-s3"
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 
@@ -9,12 +10,12 @@ export async function POST(request: Request) {
 
     try {
         const client = new S3Client({
-            region: "eu-west-1",
+            region: env.S3_REGION,
             credentials: {
-                accessKeyId: "sLCiq9XxUupUUriXGV0o",
-                secretAccessKey: "6pSzKG9KLudVw0NgdTP3qXBb8V1Np2tqukTUkWVL"
+                accessKeyId: env.S3_ACCESS_KEY_ID,
+                secretAccessKey: env.S3_SECRET_ACCESS_KEY
             },
-            endpoint: "https://minio-ocgw4kswo8w0sks8c8gc0cc8.komorebi.lol",
+            endpoint: env.S3_ENDPOINT,
             forcePathStyle: true,
         })
         const { url, fields } = await createPresignedPost(client, {
