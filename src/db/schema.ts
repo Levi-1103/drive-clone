@@ -5,6 +5,9 @@ import {
     text,
     primaryKey,
     integer,
+    bigserial,
+    index,
+    bigint,
 } from "drizzle-orm/pg-core"
 import postgres from "postgres"
 import { drizzle } from "drizzle-orm/postgres-js"
@@ -100,10 +103,28 @@ export const authenticators = pgTable(
 )
 
 export const files_table = pgTable("files_table", {
-    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    id: bigserial({ mode: "number" }).primaryKey(),
     ownerId: text("owner_id").notNull(),
+    parent_id: bigint({ mode: "number" }).notNull(),
     name: text("name").notNull(),
     size: integer("size").notNull(),
     url: text("url").notNull(),
     createdAt: timestamp("created_at").notNull().defaultNow()
-});
+},
+    (table) => [
+        index("file_parent_idx").on(table.parent_id),
+        index("file_owner_idx").on(table.ownerId),
+    ]);
+
+export const folders_table = pgTable("folders_table", {
+    id: bigserial({ mode: "number" }).primaryKey(),
+    ownerId: text("owner_id").notNull(),
+    parent_id: bigint({ mode: "number" }),
+    name: text("name").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow()
+},
+    (table) => [
+        index("folder_parent_idx").on(table.parent_id),
+        index("folder_owner_idx").on(table.ownerId),
+    ]);
+
