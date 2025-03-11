@@ -7,26 +7,14 @@ import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "@/db/schema";
 import Link from "next/link";
 
-export default function DriveContents(props: { files: typeof files_table.$inferSelect[], folders: typeof folders_table.$inferSelect[] },) {
+export default function DriveContents(props: {
+    files: typeof files_table.$inferSelect[],
+    folders: typeof folders_table.$inferSelect[],
+    parents: typeof folders_table.$inferSelect[],
+},) {
 
 
-    const breadcrumbs: unknown[] = []
-    // const breadcrumbs = useMemo(() => {
-    //     const breadcrumbs = []
-    //     let currentId = currentFolder
 
-    //     while (currentId !== 1) {
-    //         const folder = props.folders.find((folder) => folder.id === currentId)
-    //         if (folder) {
-    //             breadcrumbs.unshift(folder)
-    //             currentId = folder.parent_id ?? 1
-    //         } else {
-    //             break
-    //         }
-    //     }
-
-    //     return breadcrumbs
-    // }, [currentFolder, props.folders])
 
     const handleUpload = () => {
         alert("Upload functionality would be implemented here")
@@ -39,12 +27,12 @@ export default function DriveContents(props: { files: typeof files_table.$inferS
                     <div className="flex items-center">
                         <Link
                             href={"/1"}
-                            variant="ghost"
+
                             className="text-gray-300 hover:text-white mr-2"
                         >
                             My Drive
                         </Link>
-                        {breadcrumbs.map((folder, index) => (
+                        {props.parents.map((folder, index) => (
                             <div key={folder.id} className="flex items-center">
                                 <ChevronRight className="mx-2 text-gray-500" size={16} />
                                 <Link
