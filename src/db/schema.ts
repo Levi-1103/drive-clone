@@ -104,7 +104,7 @@ export const authenticators = pgTable(
 
 export const files_table = pgTable("files_table", {
     id: bigserial({ mode: "number" }).primaryKey(),
-    ownerId: text("owner_id").notNull(),
+    owner_id: text("owner_id").notNull(),
     parent_id: bigint({ mode: "number" }).notNull(),
     name: text("name").notNull(),
     size: integer("size").notNull(),
@@ -113,18 +113,18 @@ export const files_table = pgTable("files_table", {
 },
     (table) => [
         index("file_parent_idx").on(table.parent_id),
-        index("file_owner_idx").on(table.ownerId),
+        index("file_owner_idx").on(table.owner_id),
     ]);
 
 export const folders_table = pgTable("folders_table", {
     id: bigserial({ mode: "number" }).primaryKey(),
-    ownerId: text("owner_id").notNull(),
+    owner_id: text("owner_id").notNull(),
     parent_id: bigint({ mode: "number" }),
     name: text("name").notNull(),
     createdAt: timestamp("created_at").notNull().defaultNow()
 },
     (table) => [
         index("folder_parent_idx").on(table.parent_id),
-        index("folder_owner_idx").on(table.ownerId),
+        index("folder_owner_idx").on(table.owner_id),
     ]);
 
