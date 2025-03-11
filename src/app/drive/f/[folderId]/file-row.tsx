@@ -1,9 +1,9 @@
 "use client";
 
 import { FileIcon, Folder as FolderIcon } from "lucide-react";
-import type { Folder, File } from "@/lib/mockdata";
+import type { files_table, folders_table } from "@/db/schema";
 
-export function FileRow(props: { file: File }) {
+export function FileRow(props: { file: typeof files_table.$inferSelect }) {
     const { file } = props;
     return (
         <li key={file.id} className="px-6 py-4 border-b border-gray-700 hover:bg-gray-750">
@@ -23,7 +23,7 @@ export function FileRow(props: { file: File }) {
     );
 }
 
-export function FolderRow(props: { folder: Folder, handleFolderClick: () => void; }) {
+export function FolderRow(props: { folder: typeof folders_table.$inferSelect, handleFolderClick: () => void; }) {
     const { folder, handleFolderClick } = props;
     return (
         <li key={folder.id} className="px-6 py-4 border-b border-gray-700 hover:bg-gray-750">
