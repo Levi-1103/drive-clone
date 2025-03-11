@@ -19,7 +19,7 @@ export async function POST(request: Request) {
             forcePathStyle: true,
         })
         const { url, fields } = await createPresignedPost(client, {
-            Bucket: "files",
+            Bucket: env.S3_NAME,
             Key: filename,
             Conditions: [
                 ['content-length-range', 0, 10485760], // up to 10 MB
