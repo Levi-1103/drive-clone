@@ -4,7 +4,8 @@ import { createFolder } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Router } from "next/router";
+import { useRouter } from 'next/navigation'
+
 
 import { useState } from "react";
 
@@ -12,9 +13,22 @@ import { useState } from "react";
 export default function CreateFolderButton(props: { parentId: number, ownerId: string }) {
 
     const [folderName, setFolderName] = useState("")
+    const [open, setOpen] = useState(false)
+    const router = useRouter()
+
+
+
+    const handleCreateFolder = () => {
+        if (folderName.trim() === "") return
+        createFolder(folderName, props.ownerId, props.parentId)
+        setFolderName("")
+        setOpen(false)
+        router.refresh()
+
+    }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button>Create Folder</Button>
             </DialogTrigger>
@@ -22,19 +36,23 @@ export default function CreateFolderButton(props: { parentId: number, ownerId: s
                 <DialogHeader>
                     <DialogTitle>Create Folder</DialogTitle>
                 </DialogHeader>
-
                 <div className="flex w-full max-w-sm items-center space-x-2">
-                    <Input id="name" placeholder="Folder Name" className="col-span-3" value={folderName} onChange={(e) => setFolderName(e.target.value)} />
-                    <DialogClose asChild>
-                        <Button onClick={() => createFolder(folderName, props.ownerId, props.parentId)}>
-                            Create Folder
-                        </Button>
-                    </DialogClose>
-
+                    <Input
+                        id="name"
+                        placeholder="Folder Name"
+                        className="col-span-3"
+                        value={folderName}
+                        onChange={(e) => setFolderName(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" && folderName.trim() !== "") {
+                                handleCreateFolder()
+                            }
+                        }}
+                    />
+                    <Button onClick={handleCreateFolder} disabled={folderName.trim() === ""}>
+                        Create Folder
+                    </Button>
                 </div>
-                <DialogFooter>
-
-                </DialogFooter>
             </DialogContent>
         </Dialog >
     )
