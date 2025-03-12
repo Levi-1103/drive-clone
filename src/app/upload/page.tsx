@@ -1,5 +1,7 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 
 export default function Page() {
@@ -63,20 +65,23 @@ export default function Page() {
         <main>
             <h1>Upload a File to S3</h1>
             <form onSubmit={handleSubmit}>
-                <input
-                    id="file"
-                    type="file"
-                    onChange={(e) => {
-                        const files = e.target.files
-                        if (files) {
-                            setFile(files[0])
-                        }
-                    }}
-                    accept="image/png, image/jpeg"
-                />
-                <button type="submit" disabled={uploading}>
+                <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Input
+                        id="file"
+                        type="file"
+                        onChange={(e) => {
+                            const files = e.target.files
+                            if (files) {
+                                setFile(files[0])
+                            }
+                        }}
+                        accept="image/png, image/jpeg"
+                    />
+                </div>
+
+                <Button type="submit" disabled={uploading}>
                     Upload
-                </button>
+                </Button>
             </form>
         </main>
     )

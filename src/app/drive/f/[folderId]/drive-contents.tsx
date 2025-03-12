@@ -26,7 +26,7 @@ export default function DriveContents(props: {
                 <div className="flex justify-between items-center mb-6">
                     <div className="flex items-center">
                         <Link
-                            href={"/1"}
+                            href={"/drive/f/1"}
 
                             className="text-gray-300 hover:text-white mr-2"
                         >
