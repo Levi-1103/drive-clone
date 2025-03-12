@@ -82,7 +82,7 @@ export default async function DriveMain(props: {
                         Upload
                     </Button>
 
-                    <CreateFolderButton parentId={0} ownerId={""} />
+                    <CreateFolderButton parentId={props.parents[props.parents.length - 1].id} ownerId={session?.user?.id!} />
 
                 </div>
 
@@ -95,13 +95,3 @@ export default async function DriveMain(props: {
     )
 }
 
-export async function createFolder(folderName: string, ownerId: string, parentId: number) {
-
-    return await db.insert(folders_table).values(
-        {
-            name: folderName,
-            owner_id: ownerId,
-            parent_id: parentId,
-        }
-    )
-}

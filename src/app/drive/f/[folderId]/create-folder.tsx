@@ -1,14 +1,12 @@
 "use client"
 
-import { auth } from "@/auth";
+import { createFolder } from "@/app/actions";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Router } from "next/router";
 
-import db from "@/db";
-import { folders_table } from "@/db/schema";
 import { useState } from "react";
-import { createFolder } from "./drive-main";
 
 
 export default function CreateFolderButton(props: { parentId: number, ownerId: string }) {
@@ -27,9 +25,12 @@ export default function CreateFolderButton(props: { parentId: number, ownerId: s
 
                 <div className="flex w-full max-w-sm items-center space-x-2">
                     <Input id="name" placeholder="Folder Name" className="col-span-3" value={folderName} onChange={(e) => setFolderName(e.target.value)} />
-                    <Button>
-                        Create Folder
-                    </Button>
+                    <DialogClose asChild>
+                        <Button onClick={() => createFolder(folderName, props.ownerId, props.parentId)}>
+                            Create Folder
+                        </Button>
+                    </DialogClose>
+
                 </div>
                 <DialogFooter>
 
