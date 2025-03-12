@@ -12,6 +12,7 @@ import DriveContents from "./drive-contents";
 import Breadcrumbs from "./breadcrumbs";
 import CreateFolderButton from "./create-folder";
 import db from "@/db";
+import UploadFileButton from "./upload_file";
 
 export default async function DriveMain(props: {
     files: typeof files_table.$inferSelect[],
@@ -70,18 +71,11 @@ export default async function DriveMain(props: {
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-
-
-
                 </div>
                 <DriveContents files={props.files} folders={props.folders} parents={props.parents} />
 
                 <div className="flex items-center gap-3">
-                    <Button>
-                        <Upload className="mr-2" size={20} />
-                        Upload
-                    </Button>
-
+                    <UploadFileButton parentId={props.parents[props.parents.length - 1].id} ownerId={session?.user?.id!} />
                     <CreateFolderButton parentId={props.parents[props.parents.length - 1].id} ownerId={session?.user?.id!} />
 
                 </div>

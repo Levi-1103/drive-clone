@@ -1,7 +1,7 @@
 import db from "@/db";
 import { files_table, folders_table } from "@/db/schema";
 import DriveContents from "./drive-contents";
-import { eq } from "drizzle-orm";
+import { desc, eq, } from "drizzle-orm";
 import { SignOut } from "@/components/sign-in";
 import requireAuth from "@/utils/require-auth";
 import { auth } from "@/auth";
@@ -34,7 +34,7 @@ export default async function DriveClone(props: {
         return <div>Invalid folder ID</div>;
     }
 
-    const filesPromise = db.select().from(files_table).where(eq(files_table.parent_id, parsedFolderId));;
+    const filesPromise = db.select().from(files_table).where(eq(files_table.parent_id, parsedFolderId));
     const foldersPromise = db.select().from(folders_table).where(eq(folders_table.parent_id, parsedFolderId));
     const parentsPromise = getAllParents(parsedFolderId);
 

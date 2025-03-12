@@ -8,7 +8,7 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
     const { file } = props;
     return (
         <li key={file.id} className="px-6 py-4 border-b border-gray-700 hover:bg-gray-750">
-            <div className="grid grid-cols-12 gap-4 items-center">
+            <div className="grid grid-cols-16 gap-4 items-center">
                 <div className="col-span-6 flex items-center">
 
                     <a href={file.url} target="_blank" className="flex items-center text-primary hover:text-blue-400">
@@ -17,7 +17,8 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
                     </a>
 
                 </div>
-                <div className="col-span-3 text-gray-400">{"file"}</div>
+                {/* temp solution for file type display */}
+                <div className="col-span-3 text-gray-400">{file.name.slice(-4)}</div>
                 <div className="col-span-3 text-gray-400">{file.size}</div>
             </div>
         </li>
@@ -28,7 +29,7 @@ export function FolderRow(props: { folder: typeof folders_table.$inferSelect, ha
     const { folder } = props;
     return (
         <li key={folder.id} className="px-6 py-4 border-t border-gray-700 hover:bg-gray-750">
-            <div className="grid grid-cols-15 gap-4 items-center">
+            <div className="grid grid-cols-16 gap-4 items-center">
                 <div className="col-span-6 flex items-center">
                     <Link
                         href={`/drive/f/${folder.id}`}
@@ -39,7 +40,7 @@ export function FolderRow(props: { folder: typeof folders_table.$inferSelect, ha
                 </div>
                 <div className="col-span-3 text-gray-400"></div>
                 <div className="col-span-3 text-gray-400"></div>
-                <div className="col-span-3 text-gray-400">{folder.createdAt.toLocaleString()}</div>
+                <div className="col-span-4 text-gray-400">{folder.createdAt.toUTCString()}</div>
 
             </div>
         </li>

@@ -1,7 +1,7 @@
 'use server'
 
 import db from "@/db"
-import { folders_table } from "@/db/schema"
+import { files_table, folders_table } from "@/db/schema"
 
 
 export async function createFolder(folderName: string, ownerId: string, parentId: number) {
@@ -13,4 +13,17 @@ export async function createFolder(folderName: string, ownerId: string, parentId
             parent_id: parentId,
         }
     )
+}
+
+
+export async function createFile(fileName: string, ownerId: string, parentId: number, file_size: number, file_url: string) {
+
+    return await db.insert(files_table).values(
+        {
+            name: fileName,
+            owner_id: ownerId,
+            parent_id: parentId,
+            size: file_size,
+            url: file_url,
+        })
 }
