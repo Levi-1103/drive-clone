@@ -8,6 +8,8 @@ import requireAuth from "@/utils/require-auth";
 
 import { ChevronRight, Upload } from "lucide-react"
 import Link from "next/link";
+import DriveContents from "./drive-contents";
+import Breadcrumbs from "./breadcrumbs";
 
 export default async function DriveMain(props: {
     files: typeof files_table.$inferSelect[],
@@ -25,7 +27,7 @@ export default async function DriveMain(props: {
 
     return (
         <div className="min-h-screen p-8">
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-6xl mx-auto flex flex-col gap-3">
                 <div className="flex justify-between items-center mb-6">
                     <div className="flex items-center">
                         <Link
@@ -35,22 +37,8 @@ export default async function DriveMain(props: {
                         >
                             My Drive
                         </Link>
-                        {/* {props.parents.map((folder, index) => (
-                            <div key={folder.id} className="flex items-center">
-                                <ChevronRight className="mx-2 text-gray-500" size={16} />
-                                <Link
-                                    href={`/drive/f/${folder.id}`}
-                                    className="text-gray-300 hover:text-white"
-                                >
-                                    {folder.name}
-                                </Link>
-                            </div>
-                        ))} */}
+                        <Breadcrumbs parents={props.parents} />
                     </div>
-                    <Button >
-                        <Upload className="mr-2" size={20} />
-                        Upload
-                    </Button>
 
 
 
@@ -84,8 +72,23 @@ export default async function DriveMain(props: {
 
 
                 </div>
+                <DriveContents files={props.files} folders={props.folders} parents={props.parents} />
+
+                <div className="flex items-center gap-3">
+                    <Button>
+                        <Upload className="mr-2" size={20} />
+                        Upload
+                    </Button>
+
+                    <Button>
+                        Create Folder
+                    </Button>
+                </div>
+
 
             </div>
+
+
         </div>
     )
 }

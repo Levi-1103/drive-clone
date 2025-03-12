@@ -48,14 +48,10 @@ export default async function DriveClone(props: {
 
     const [folders, files, parents] = await Promise.all([foldersPromise, filesPromise, parentsPromise])
 
-    // await requireAuth();
-    // const session = await auth();
     return (
 
         <div>
-
             <DriveMain files={files} folders={folders} parents={parents} />
-            {/* <DriveContents files={files} folders={folders} parents={parents} /> */}
 
         </div>
 

@@ -27,7 +27,7 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
 export function FolderRow(props: { folder: typeof folders_table.$inferSelect, handleFolderClick: () => void; }) {
     const { folder } = props;
     return (
-        <li key={folder.id} className="px-6 py-4 border-b border-gray-700 hover:bg-gray-750">
+        <li key={folder.id} className="px-6 py-4 border-t border-gray-700 hover:bg-gray-750">
             <div className="grid grid-cols-12 gap-4 items-center">
                 <div className="col-span-6 flex items-center">
                     <Link
