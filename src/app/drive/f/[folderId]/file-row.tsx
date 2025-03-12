@@ -7,11 +7,11 @@ import Link from "next/link";
 export function FileRow(props: { file: typeof files_table.$inferSelect }) {
     const { file } = props;
     return (
-        <li key={file.id} className="px-6 py-4 border-b border-gray-700 hover:bg-gray-750">
+        <li key={file.id} className="px-6 py-4 border-t border-gray-700 hover:bg-gray-750">
             <div className="grid grid-cols-16 gap-4 items-center">
                 <div className="col-span-6 flex items-center">
 
-                    <a href={file.url} target="_blank" className="flex items-center text-primary hover:text-blue-400">
+                    <a href={file.url} target="_blank" className="flex items-center text-primary hover:text-blue-400 break-all">
                         <FileIcon className="mr-3" size={20} />
                         {file.name}
                     </a>
@@ -20,6 +20,7 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
                 {/* temp solution for file type display */}
                 <div className="col-span-3 text-gray-400">{file.name.slice(-4)}</div>
                 <div className="col-span-3 text-gray-400">{file.size}</div>
+                <div className="col-span-4 text-gray-400">{file.createdAt.toUTCString()}</div>
             </div>
         </li>
     );
