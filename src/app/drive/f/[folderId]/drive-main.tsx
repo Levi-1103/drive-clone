@@ -10,6 +10,8 @@ import { ChevronRight, Upload } from "lucide-react"
 import Link from "next/link";
 import DriveContents from "./drive-contents";
 import Breadcrumbs from "./breadcrumbs";
+import CreateFolderButton from "./create-folder";
+import db from "@/db";
 
 export default async function DriveMain(props: {
     files: typeof files_table.$inferSelect[],
@@ -80,10 +82,10 @@ export default async function DriveMain(props: {
                         Upload
                     </Button>
 
-                    <Button>
-                        Create Folder
-                    </Button>
+                    <CreateFolderButton parentId={0} ownerId={""} />
+
                 </div>
+
 
 
             </div>
@@ -93,3 +95,13 @@ export default async function DriveMain(props: {
     )
 }
 
+export async function createFolder(folderName: string, ownerId: string, parentId: number) {
+
+    return await db.insert(folders_table).values(
+        {
+            name: folderName,
+            owner_id: ownerId,
+            parent_id: parentId,
+        }
+    )
+}
