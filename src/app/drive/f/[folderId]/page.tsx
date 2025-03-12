@@ -4,6 +4,8 @@ import DriveContents from "./drive-contents";
 import { eq } from "drizzle-orm";
 import { SignOut } from "@/components/sign-in";
 import requireAuth from "@/utils/require-auth";
+import { auth } from "@/auth";
+import DriveMain from "./drive-main";
 
 
 
@@ -46,12 +48,14 @@ export default async function DriveClone(props: {
 
     const [folders, files, parents] = await Promise.all([foldersPromise, filesPromise, parentsPromise])
 
-    await requireAuth();
+    // await requireAuth();
+    // const session = await auth();
     return (
 
         <div>
-            <SignOut />
-            <DriveContents files={files} folders={folders} parents={parents} />
+
+            <DriveMain files={files} folders={folders} parents={parents} />
+            {/* <DriveContents files={files} folders={folders} parents={parents} /> */}
 
         </div>
 

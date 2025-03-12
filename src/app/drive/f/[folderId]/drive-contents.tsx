@@ -7,7 +7,6 @@ import type { files_table, folders_table } from "@/db/schema";
 import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { auth } from "@/auth";
-import { SignOut } from "@/components/sign-in";
 
 
 export default function DriveContents(props: {
@@ -54,6 +53,8 @@ export default function DriveContents(props: {
                         <AvatarImage src={""} />
                         <AvatarFallback>Avatar</AvatarFallback>
                     </Avatar>
+
+
 
 
                 </div>

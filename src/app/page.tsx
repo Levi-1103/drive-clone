@@ -26,7 +26,6 @@ export default async function Home() {
     );
 
 
-  // Redirect user to their drive if logged in
   const rootFolder = await db.select().from(folders_table).where(
     and(eq(folders_table.owner_id, session?.user?.id!), isNull(folders_table.parent_id))
   );
