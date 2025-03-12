@@ -48,6 +48,8 @@ export default function Page() {
                 body: formData,
             })
 
+
+
             if (uploadResponse.ok) {
                 alert('Upload successful!')
             } else {
@@ -62,7 +64,7 @@ export default function Page() {
     }
 
     return (
-        <main>
+        <main className=''>
             <h1>Upload a File to S3</h1>
             <form onSubmit={handleSubmit}>
                 <div className="grid w-full max-w-sm items-center gap-1.5">

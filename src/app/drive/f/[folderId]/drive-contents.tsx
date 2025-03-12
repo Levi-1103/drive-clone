@@ -2,10 +2,13 @@
 
 import { Folder, FileIcon, Upload, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { use, useMemo, useState } from "react"
 import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "@/db/schema";
 import Link from "next/link";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import { auth } from "@/auth";
+import { SignOut } from "@/components/sign-in";
+
 
 export default function DriveContents(props: {
     files: typeof files_table.$inferSelect[],
@@ -14,21 +17,19 @@ export default function DriveContents(props: {
 },) {
 
 
-
-
     const handleUpload = () => {
         alert("Upload functionality would be implemented here")
     }
 
     return (
-        <div className="min-h-screen bg-gray-900 text-gray-100 p-8">
+        <div className="min-h-screen p-8">
             <div className="max-w-6xl mx-auto">
                 <div className="flex justify-between items-center mb-6">
                     <div className="flex items-center">
                         <Link
                             href={"/drive/f/1"}
 
-                            className="text-gray-300 hover:text-white mr-2"
+                            className=" hover:text-white mr-2"
                         >
                             My Drive
                         </Link>
@@ -44,10 +45,17 @@ export default function DriveContents(props: {
                             </div>
                         ))}
                     </div>
-                    <Button onClick={handleUpload} className="bg-blue-600 text-white hover:bg-blue-700">
+                    <Button onClick={handleUpload}>
                         <Upload className="mr-2" size={20} />
                         Upload
                     </Button>
+
+                    <Avatar>
+                        <AvatarImage src={""} />
+                        <AvatarFallback>Avatar</AvatarFallback>
+                    </Avatar>
+
+
                 </div>
                 <div className="bg-gray-800 rounded-lg shadow-xl">
                     <div className="px-6 py-4 border-b border-gray-700">

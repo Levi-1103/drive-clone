@@ -1,53 +1,75 @@
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 
 import db from "@/db";
 import { files_table, folders_table } from "@/db/schema";
 import { mockFiles, mockFolders } from "@/lib/mockdata";
+import { redirect } from "next/navigation";
 
-export default function SandboxPage() {
+
+export default async function SandboxPage() {
+
+    const session = await auth();
+
     return (
         <div className="flex flex-col gap-4">
+
+
+
+
             <form action={async () => {
                 "use server";
 
-                console.log("awooga")
-                // await db.insert(folders_table).values(
-                //     mockFolders.map((folder, index) => ({
-                //         ownerId: index,
-                //         parent_id: index !== 0 ? 1 : null,
-                //         name: folder.name,
-                //     }));
-                // );
 
-                // await db.insert(folders_table).values(
-                //     {
-                //         name: "hello",
-                //         owner_id: "dasdsad",
-                //         parent_id: 3,
-                //     }
-                // )
 
-                const folderInsert = await db.insert(folders_table).values(
-                    mockFolders.map((folder, index) => ({
-                        name: folder.name,
-                        owner_id: "user1",
-                        parent_id: index !== 0 ? 1 : null,
-                    }))
-                )
+                if (!session?.user?.id) {
+                    throw new Error("owner_id cannot be null");
+                }
 
                 const fileInsert = await db.insert(files_table).values(
-                    mockFiles.map((file, index) => ({
-                        name: file.name,
-                        owner_id: "user1",
-                        parent_id: (index % 3) + 1,
-                        size: 534534,
-                        url: file.url,
-                    }))
-                )
+                    {
+                        name: "filename",
+                        owner_id: session.user.id,
+                        parent_id: 1,
+                        size: 1000,
+                        url: "file.url",
+                    })
 
-                console.log(folderInsert, fileInsert)
+
+                console.log(fileInsert)
             }}>
-                <Button type="submit">SEED</Button>
+                <Button type="submit">Add File</Button>
+            </form>
+
+            <form action={async () => {
+                "use server";
+
+                if (!session?.user?.id) {
+                    throw new Error("owner_id cannot be null");
+                }
+
+                const folderInsert = await db.insert(folders_table).values(
+                    {
+                        name: "root",
+                        owner_id: "session.user.id",
+                        parent_id: null,
+                    }
+                ).returning({ insertedId: folders_table.id });
+
+                console.log(folderInsert)
+
+                const rootFolderId = folderInsert[0].insertedId;
+
+
+                redirect(`/drive/f/${rootFolderId}`);
+
+
+
+
+
+
+            }}>
+                <Button type="submit">Add Folder</Button>
             </form>
         </div >
     );

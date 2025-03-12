@@ -2,6 +2,9 @@ import db from "@/db";
 import { files_table, folders_table } from "@/db/schema";
 import DriveContents from "./drive-contents";
 import { eq } from "drizzle-orm";
+import { SignOut } from "@/components/sign-in";
+import requireAuth from "@/utils/require-auth";
+
 
 
 async function getAllParents(folderId: number) {
@@ -23,6 +26,10 @@ export default async function DriveClone(props: {
     params: Promise<{ folderId: string }>;
 }) {
 
+
+
+
+
     const params = await props.params;
 
     const parsedFolderId = parseInt(params.folderId);
@@ -38,8 +45,17 @@ export default async function DriveClone(props: {
     const parentsPromise = getAllParents(parsedFolderId);
 
     const [folders, files, parents] = await Promise.all([foldersPromise, filesPromise, parentsPromise])
+
+    await requireAuth();
     return (
-        <DriveContents files={files} folders={folders} parents={parents} />
+
+        <div>
+            <SignOut />
+            <DriveContents files={files} folders={folders} parents={parents} />
+
+        </div>
+
+
     );
 }
 
