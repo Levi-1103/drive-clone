@@ -33,7 +33,7 @@ export default async function DriveMain(props: {
                 <div className="flex justify-between items-center mb-6">
                     <div className="flex items-center">
                         <Link
-                            href={"/drive/f/1"}
+                            href={`/drive/f/${props.parents[0].id}`}
 
                             className=" hover:text-white mr-2"
                         >
