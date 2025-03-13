@@ -1,7 +1,6 @@
 "use client"
 
-import type React from "react"
-import { useState } from "react"
+import { createFile } from "@/app/actions"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -15,9 +14,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Upload, X } from "lucide-react"
-import { toast } from "sonner"
-import { createFile } from "@/app/actions"
 import { useRouter } from "next/navigation"
+import type React from "react"
+import { useState } from "react"
+import { toast } from "sonner"
 
 export default function UploadFileButton(props: { parentId: number, ownerId: string }) {
     const [open, setOpen] = useState(false)
@@ -84,6 +84,7 @@ export default function UploadFileButton(props: { parentId: number, ownerId: str
             createFile(file.name, props.ownerId, props.parentId, file.size, fields.key)
 
         } catch (error) {
+            console.log(error)
             toast.error("Upload failed", {
                 description: "There was an error uploading your file. Please try again.",
             })

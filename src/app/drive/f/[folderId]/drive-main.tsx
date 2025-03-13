@@ -1,14 +1,13 @@
 import { auth, signOut } from "@/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { files_table, folders_table } from "@/db/schema"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { files_table, folders_table } from "@/db/schema";
 import requireAuth from "@/utils/require-auth";
 
 import Link from "next/link";
-import DriveContents from "./drive-contents";
 import Breadcrumbs from "./breadcrumbs";
 import CreateFolderButton from "./create-folder";
-import db from "@/db";
+import DriveContents from "./drive-contents";
 import UploadFileButton from "./upload-file";
 
 export default async function DriveMain(props: {
@@ -18,7 +17,7 @@ export default async function DriveMain(props: {
 },) {
 
     await requireAuth();
-    const session = await auth();
+    const session = await auth()!;
 
     return (
         <div className="min-h-screen p-8">

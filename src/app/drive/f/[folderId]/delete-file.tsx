@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { Download, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -27,6 +27,7 @@ export default function DeleteFile(props: { ownerId: string, fileUrl: string }) 
 
 
         } catch (error) {
+            console.log(error)
             toast.error("Delete Failed", {
                 description: "There was an error deleting your file. Please try again.",
             })

@@ -1,10 +1,6 @@
 import db from "@/db";
 import { files_table, folders_table } from "@/db/schema";
-import DriveContents from "./drive-contents";
-import { desc, eq, } from "drizzle-orm";
-import { SignOut } from "@/components/sign-in";
-import requireAuth from "@/utils/require-auth";
-import { auth } from "@/auth";
+import { eq } from "drizzle-orm";
 import DriveMain from "./drive-main";
 
 

@@ -1,16 +1,16 @@
 import { auth } from "@/auth";
-import { env } from "@/env/server"
-import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3"
+import { env } from "@/env/server";
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import {
-    getSignedUrl,
-    S3RequestPresigner,
+    getSignedUrl
 } from "@aws-sdk/s3-request-presigner";
 import { NextResponse } from "next/server";
 
 
-export const GET = auth(async function GET(req) {
-    if (!req.auth) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
+export async function GET(req: Request) {
 
+    const session = await auth();
+    if (!session) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
 
     const { searchParams } = new URL(req.url);
 
@@ -39,7 +39,7 @@ export const GET = auth(async function GET(req) {
         return NextResponse.json(clientUrl)
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error: error.message })
+        return NextResponse.json({ error: error })
     }
 
-});
+};

@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
-import router from "next/router";
 import { toast } from "sonner";
 
 export default function DownloadFile(props: { ownerId: string, fileUrl: string }) {
@@ -26,6 +25,7 @@ export default function DownloadFile(props: { ownerId: string, fileUrl: string }
             }
 
         } catch (error) {
+            console.log(error)
             toast.error("Download failed", {
                 description: "There was an error downloading your file. Please try again.",
             })

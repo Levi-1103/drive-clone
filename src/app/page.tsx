@@ -1,11 +1,9 @@
 import { auth } from "@/auth";
 import { SignIn } from "@/components/sign-in";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button"
 import db from "@/db";
 import { folders_table } from "@/db/schema";
-import { eq, isNull, and } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
 export default async function Home() {

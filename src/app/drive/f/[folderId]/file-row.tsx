@@ -1,10 +1,10 @@
 "use client";
 
-import { Download, FileIcon, Folder as FolderIcon } from "lucide-react";
 import type { files_table, folders_table } from "@/db/schema";
+import { FileIcon, Folder as FolderIcon } from "lucide-react";
 import Link from "next/link";
-import DownloadFile from "./download-file";
 import DeleteFile from "./delete-file";
+import DownloadFile from "./download-file";
 
 export function FileRow(props: { file: typeof files_table.$inferSelect, ownerId: string }) {
     const { file, ownerId } = props;

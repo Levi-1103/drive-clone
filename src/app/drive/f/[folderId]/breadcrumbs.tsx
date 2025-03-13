@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Breadcrumbs(props: { parents: typeof folders_table.$inferSelect[] }) {
     return (
         <>
-            {props.parents.slice(1).map((folder, index) => (
+            {props.parents.slice(1).map((folder) => (
                 <div key={folder.id} className="flex items-center">
                     <ChevronRight className="mx-2 text-gray-500" size={16} />
                     <Link

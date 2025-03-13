@@ -1,7 +1,7 @@
 "use client";
 
-import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "@/db/schema";
+import { FileRow, FolderRow } from "./file-row";
 
 
 export default function DriveContents(props: {

@@ -6,11 +6,13 @@ import { NextResponse } from "next/server"
 import { v4 as uuidv4 } from 'uuid';
 
 
-export const POST = auth(async function POST(req) {
-    if (!req.auth) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
-    const { filename, contentType } = await req.json()
+export async function GET(req: Request) {
 
-    const fileKey = req.auth.user?.id + "/" + uuidv4();
+    const session = await auth();
+    if (!session) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
+    const { contentType } = await req.json()
+
+    const fileKey = session.user?.id + "/" + uuidv4();
 
     try {
         const client = new S3Client({
@@ -40,6 +42,6 @@ export const POST = auth(async function POST(req) {
         return NextResponse.json({ url, fields, })
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error: error.message })
+        return NextResponse.json({ error: error })
     }
-});
+};
