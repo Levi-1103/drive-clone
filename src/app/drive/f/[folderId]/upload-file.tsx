@@ -46,11 +46,10 @@ export default function UploadFileButton(props: { parentId: number, ownerId: str
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ filename: props.ownerId + "/" + file.name, contentType: file.type }),
+                    body: JSON.stringify({ filename: file.name, contentType: file.type }),
                 }
             )
 
-            console.log(response)
 
             if (!response.ok) {
                 throw new Error("Failed to get pre-signed URL");
@@ -63,9 +62,9 @@ export default function UploadFileButton(props: { parentId: number, ownerId: str
             })
             formData.append('file', file)
 
-            for (const pair of formData.entries()) {
-                console.log(pair[0], pair[1]);
-            }
+            // for (const pair of formData.entries()) {
+            //     console.log(pair[0], pair[1]);
+            // }
 
             const uploadResponse = await fetch(url, {
                 method: 'POST',
@@ -82,9 +81,7 @@ export default function UploadFileButton(props: { parentId: number, ownerId: str
             setFile(null)
             setOpen(false)
 
-            console.log(uploadResponse)
-
-            createFile(file.name, props.ownerId, props.parentId, file.size, uploadResponse.url)
+            createFile(file.name, props.ownerId, props.parentId, file.size, fields.key)
 
         } catch (error) {
             toast.error("Upload failed", {

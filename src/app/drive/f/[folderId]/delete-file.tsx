@@ -2,47 +2,42 @@
 
 import { Button } from "@/components/ui/button";
 import { Download, Trash } from "lucide-react";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export default function DeleteFile(props: { ownerId: string, fileName: string }) {
+export default function DeleteFile(props: { ownerId: string, fileUrl: string }) {
+    const router = useRouter()
 
-    const handleDownload = async () => {
+    const handleDelete = async () => {
 
-        const fileKey = props.ownerId + "/" + props.fileName
+        const fileKey = props.fileUrl
 
         console.log(fileKey)
         try {
-            const response = await fetch(
-                'http://localhost:3000/api/files/download',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ key: fileKey }),
-                }
-            )
-            const download_url = await response.json();
+            const queryParams = new URLSearchParams({
+                key: fileKey,
+            })
+            const response = await fetch('http://localhost:3000/api/files/delete?' + queryParams, {
+                method: 'DELETE',
+            })
 
-            window.open(download_url, '_blank')
             if (!response.ok) {
-                throw new Error("Failed to get pre-signed URL");
+                throw new Error("Failed to Delete File");
             }
 
+
         } catch (error) {
-            toast.error("Download failed", {
-                description: "There was an error downloading your file. Please try again.",
+            toast.error("Delete Failed", {
+                description: "There was an error deleting your file. Please try again.",
             })
         }
         finally {
             // setIsUploading(false)
-            // router.refresh()
+            router.refresh()
         }
-
     }
     return (
-        <Button onClick={handleDownload} variant="outline" size="icon">
+        <Button onClick={handleDelete} variant="outline" size="icon">
             <Trash />
         </Button>
     );

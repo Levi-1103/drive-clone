@@ -24,7 +24,7 @@ export function FileRow(props: { file: typeof files_table.$inferSelect, ownerId:
                 <div className="col-span-3 text-gray-400">{file.size}</div>
                 <div className="col-span-4 text-gray-400">{file.createdAt.toUTCString()}</div>
                 <DownloadFile ownerId={ownerId} fileName={file.name} />
-                <DeleteFile ownerId={ownerId} fileName={file.name} />
+                <DeleteFile ownerId={ownerId} fileUrl={file.url} />
 
             </div>
         </li>

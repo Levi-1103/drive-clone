@@ -3,10 +3,14 @@ import { env } from "@/env/server"
 import { S3Client } from "@aws-sdk/client-s3"
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post'
 import { NextResponse } from "next/server"
+import { v4 as uuidv4 } from 'uuid';
+
 
 export const POST = auth(async function POST(req) {
     if (!req.auth) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
     const { filename, contentType } = await req.json()
+
+    const fileKey = req.auth.user?.id + "/" + uuidv4();
 
     try {
         const client = new S3Client({
@@ -20,7 +24,7 @@ export const POST = auth(async function POST(req) {
         })
         const { url, fields } = await createPresignedPost(client, {
             Bucket: env.S3_NAME,
-            Key: filename,
+            Key: fileKey,
             Conditions: [
                 ['content-length-range', 0, 10485760], // up to 10 MB
                 ['starts-with', '$Content-Type', contentType],
@@ -38,6 +42,4 @@ export const POST = auth(async function POST(req) {
         console.log(error)
         return NextResponse.json({ error: error.message })
     }
-
-
 });
