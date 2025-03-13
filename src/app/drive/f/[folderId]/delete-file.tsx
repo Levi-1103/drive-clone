@@ -32,7 +32,6 @@ export default function DeleteFile(props: { ownerId: string, fileUrl: string }) 
             })
         }
         finally {
-            // setIsUploading(false)
             router.refresh()
         }
     }

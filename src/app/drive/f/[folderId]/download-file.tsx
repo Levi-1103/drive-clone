@@ -5,11 +5,11 @@ import { Download } from "lucide-react";
 import router from "next/router";
 import { toast } from "sonner";
 
-export default function DownloadFile(props: { ownerId: string, fileName: string }) {
+export default function DownloadFile(props: { ownerId: string, fileUrl: string }) {
 
     const handleDownload = async () => {
 
-        const fileKey = props.ownerId + "/" + props.fileName
+        const fileKey = props.fileUrl
 
         console.log(fileKey)
         try {
@@ -34,7 +34,6 @@ export default function DownloadFile(props: { ownerId: string, fileName: string 
             // setIsUploading(false)
             // router.refresh()
         }
-
     }
     return (
         <Button onClick={handleDownload} variant="outline" size="icon">
