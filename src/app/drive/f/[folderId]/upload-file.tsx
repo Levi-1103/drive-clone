@@ -50,6 +50,8 @@ export default function UploadFileButton(props: { parentId: number, ownerId: str
                 }
             )
 
+            console.log(response)
+
 
             if (!response.ok) {
                 throw new Error("Failed to get pre-signed URL");
