@@ -35,6 +35,12 @@ export default async function DriveMain(props: {
                         <Breadcrumbs parents={props.parents} />
                     </div>
 
+                    <div className="flex items-center gap-3">
+                        <UploadFileButton parentId={props.parents[props.parents.length - 1].id} ownerId={session?.user?.id!} />
+                        <CreateFolderButton parentId={props.parents[props.parents.length - 1].id} ownerId={session?.user?.id!} />
+
+                    </div>
+
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild className="w-10 h-10 hover:opacity-75">
                             <Avatar className="">
@@ -64,11 +70,7 @@ export default async function DriveMain(props: {
                 </div>
                 <DriveContents files={props.files} folders={props.folders} parents={props.parents} ownerId={session?.user?.id!} />
 
-                <div className="flex items-center gap-3">
-                    <UploadFileButton parentId={props.parents[props.parents.length - 1].id} ownerId={session?.user?.id!} />
-                    <CreateFolderButton parentId={props.parents[props.parents.length - 1].id} ownerId={session?.user?.id!} />
 
-                </div>
             </div>
         </div>
     )

@@ -1,17 +1,12 @@
-import { auth } from "@/auth";
 import { env } from "@/env/server"
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3"
 import {
     getSignedUrl,
     S3RequestPresigner,
 } from "@aws-sdk/s3-request-presigner";
-import { NextResponse } from "next/server";
 
-
-export const POST = auth(async function POST(req) {
-    if (!req.auth) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
-
-    const { key } = await req.json()
+export async function DELETE(request: Request) {
+    const { key } = await request.json()
 
     try {
         const client = new S3Client({
@@ -31,10 +26,11 @@ export const POST = auth(async function POST(req) {
 
         const clientUrl = await createPresignedUrlWithClient(key, client)
 
-        return NextResponse.json(clientUrl)
+        return Response.json(clientUrl)
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error: error.message })
+        return Response.json({ error: error.message })
     }
 
-});
+
+}
