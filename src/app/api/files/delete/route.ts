@@ -1,12 +1,18 @@
+import { auth } from "@/auth";
 import { env } from "@/env/server"
-import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3"
+import { DeleteObjectCommand, GetObjectCommand, S3Client } from "@aws-sdk/client-s3"
 import {
     getSignedUrl,
     S3RequestPresigner,
 } from "@aws-sdk/s3-request-presigner";
+import { NextResponse } from "next/server";
 
-export async function DELETE(request: Request) {
-    const { key } = await request.json()
+export const DELETE = auth(async function DELETE(req) {
+    if (!req.auth) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
+
+    const { key } = await req.json()
+
+
 
     try {
         const client = new S3Client({
@@ -20,17 +26,16 @@ export async function DELETE(request: Request) {
         })
         const createPresignedUrlWithClient = (key: string, s3Client: S3Client) => {
             const client = s3Client;
-            const command = new GetObjectCommand({ Bucket: env.S3_NAME, Key: key });
+            const command = new DeleteObjectCommand({ Bucket: env.S3_NAME, Key: key });
             return getSignedUrl(client, command, { expiresIn: 3600 });
         };
 
         const clientUrl = await createPresignedUrlWithClient(key, client)
 
-        return Response.json(clientUrl)
+        return NextResponse.json(clientUrl)
     } catch (error) {
         console.log(error)
-        return Response.json({ error: error.message })
+        return NextResponse.json({ error: error.message })
     }
 
-
-}
+});

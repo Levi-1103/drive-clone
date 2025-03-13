@@ -13,16 +13,11 @@ export default function DownloadFile(props: { ownerId: string, fileName: string 
 
         console.log(fileKey)
         try {
-            const response = await fetch(
-                'http://localhost:3000/api/files/download',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ key: fileKey }),
-                }
-            )
+
+            const queryParams = new URLSearchParams({
+                key: fileKey,
+            })
+            const response = await fetch('http://localhost:3000/api/files/download?' + queryParams)
             const download_url = await response.json();
 
             window.open(download_url, '_blank')

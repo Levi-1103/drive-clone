@@ -8,10 +8,16 @@ import {
 import { NextResponse } from "next/server";
 
 
-export const POST = auth(async function POST(req) {
+export const GET = auth(async function GET(req) {
     if (!req.auth) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
 
-    const { key } = await req.json()
+    // const { key } = await req.json()
+
+    const { searchParams } = new URL(req.url);
+
+    const key = searchParams.get("key")
+
+    if (!key) return NextResponse.json({ message: "Bad Request" }, { status: 400 })
 
     try {
         const client = new S3Client({
