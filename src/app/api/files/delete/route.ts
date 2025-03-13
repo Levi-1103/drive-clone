@@ -4,10 +4,11 @@ import { env } from "@/env/server";
 import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { NextResponse } from "next/server";
 
+
 export async function DELETE(req: Request) {
 
     const session = await auth();
-    if (!session) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
+    if (!session?.user) return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
 
     const { searchParams } = new URL(req.url);
 
@@ -29,7 +30,7 @@ export async function DELETE(req: Request) {
 
         const deleteCommand = await client.send(new DeleteObjectCommand({ Bucket: env.S3_NAME, Key: key }));
 
-        await deleteFile(key, session.user?.id!)
+        await deleteFile(key, session.user.id!)
 
 
         return NextResponse.json(deleteCommand)

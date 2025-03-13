@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
+import { env } from "@/env/client";
 import { Download } from "lucide-react";
 import { toast } from "sonner";
 
@@ -10,13 +11,15 @@ export default function DownloadFile(props: { ownerId: string, fileUrl: string }
 
         const fileKey = props.fileUrl
 
+        const baseUrl = env.NEXT_PUBLIC_BASE_URL;
+
         console.log(fileKey)
         try {
 
             const queryParams = new URLSearchParams({
                 key: fileKey,
             })
-            const response = await fetch('http://localhost:3000/api/files/download?' + queryParams)
+            const response = await fetch(baseUrl + '/api/files/download?' + queryParams)
             const download_url = await response.json();
 
             window.open(download_url, '_blank')

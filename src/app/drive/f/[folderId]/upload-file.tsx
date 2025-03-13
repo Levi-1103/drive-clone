@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { env } from "@/env/client"
 import { Upload, X } from "lucide-react"
 import { useRouter } from "next/navigation"
 import type React from "react"
@@ -31,6 +32,7 @@ export default function UploadFileButton(props: { parentId: number, ownerId: str
         }
     }
 
+    const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
     const handleUpload = async () => {
         if (!file) {
@@ -40,7 +42,7 @@ export default function UploadFileButton(props: { parentId: number, ownerId: str
 
         try {
             const response = await fetch(
-                'http://localhost:3000/api/files/upload',
+                baseUrl + '/api/files/upload',
                 {
                     method: 'POST',
                     headers: {

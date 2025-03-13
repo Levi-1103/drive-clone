@@ -25,7 +25,7 @@ export default async function Home() {
 
 
   const rootFolder = await db.select().from(folders_table).where(
-    and(eq(folders_table.owner_id, session?.user?.id!), isNull(folders_table.parent_id))
+    and(eq(folders_table.owner_id, session.user.id!), isNull(folders_table.parent_id))
   );
 
   console.log(rootFolder)
@@ -34,7 +34,7 @@ export default async function Home() {
     const createRootFolder = await db.insert(folders_table).values(
       {
         name: "root",
-        owner_id: session?.user?.id!,
+        owner_id: session.user.id!,
         parent_id: null,
       }
     ).returning({ insertedId: folders_table.id });

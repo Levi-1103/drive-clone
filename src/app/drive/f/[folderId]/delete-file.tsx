@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
+import { env } from "@/env/client";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -12,12 +13,14 @@ export default function DeleteFile(props: { ownerId: string, fileUrl: string }) 
 
         const fileKey = props.fileUrl
 
+        const baseUrl = env.NEXT_PUBLIC_BASE_URL;
+
         console.log(fileKey)
         try {
             const queryParams = new URLSearchParams({
                 key: fileKey,
             })
-            const response = await fetch('http://localhost:3000/api/files/delete?' + queryParams, {
+            const response = await fetch(baseUrl + '/api/files/delete?' + queryParams, {
                 method: 'DELETE',
             })
 
