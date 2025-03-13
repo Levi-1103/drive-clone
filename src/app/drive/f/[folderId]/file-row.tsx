@@ -1,11 +1,12 @@
 "use client";
 
-import { FileIcon, Folder as FolderIcon } from "lucide-react";
+import { Download, FileIcon, Folder as FolderIcon } from "lucide-react";
 import type { files_table, folders_table } from "@/db/schema";
 import Link from "next/link";
+import DownloadFile from "./download-file";
 
-export function FileRow(props: { file: typeof files_table.$inferSelect }) {
-    const { file } = props;
+export function FileRow(props: { file: typeof files_table.$inferSelect, ownerId: string }) {
+    const { file, ownerId } = props;
     return (
         <li key={file.id} className="px-6 py-4 border-t border-gray-700 hover:bg-gray-750">
             <div className="grid grid-cols-16 gap-4 items-center">
@@ -21,6 +22,7 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
                 <div className="col-span-3 text-gray-400">{file.name.slice(-4)}</div>
                 <div className="col-span-3 text-gray-400">{file.size}</div>
                 <div className="col-span-4 text-gray-400">{file.createdAt.toUTCString()}</div>
+                <DownloadFile ownerId={ownerId} fileName={file.name} />
             </div>
         </li>
     );

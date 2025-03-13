@@ -40,15 +40,17 @@ export default function UploadFileButton(props: { parentId: number, ownerId: str
 
         try {
             const response = await fetch(
-                'http://localhost:3000/api/upload',
+                'http://localhost:3000/api/files/upload',
                 {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ filename: file.name, contentType: file.type }),
+                    body: JSON.stringify({ filename: props.ownerId + "/" + file.name, contentType: file.type }),
                 }
             )
+
+            console.log(response)
 
             if (!response.ok) {
                 throw new Error("Failed to get pre-signed URL");
@@ -79,6 +81,8 @@ export default function UploadFileButton(props: { parentId: number, ownerId: str
             })
             setFile(null)
             setOpen(false)
+
+            console.log(uploadResponse)
 
             createFile(file.name, props.ownerId, props.parentId, file.size, uploadResponse.url)
 

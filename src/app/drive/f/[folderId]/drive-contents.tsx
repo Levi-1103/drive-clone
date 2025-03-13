@@ -8,6 +8,7 @@ export default function DriveContents(props: {
     files: typeof files_table.$inferSelect[],
     folders: typeof folders_table.$inferSelect[],
     parents: typeof folders_table.$inferSelect[],
+    ownerId: string
 },) {
 
     return (
@@ -34,7 +35,7 @@ export default function DriveContents(props: {
                 {props.folders.length === 0 && props.files.length === 0 && <div className="p-10 justify-self-center">Empty Folder</div>}
 
                 {props.files.map((file) => (
-                    <FileRow key={file.id} file={file} />
+                    <FileRow key={file.id} file={file} ownerId={props.ownerId} />
                 ))}
             </ul>
 

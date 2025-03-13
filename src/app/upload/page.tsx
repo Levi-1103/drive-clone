@@ -19,7 +19,7 @@ export default function Page() {
         setUploading(true)
 
         const response = await fetch(
-            'http://localhost:3000/api/upload',
+            'http://localhost:3000/api/download',
             {
                 method: 'POST',
                 headers: {
