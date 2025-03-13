@@ -65,8 +65,6 @@ export async function DELETE(req: Request) {
 
         await deleteFile(key, session.user?.id!)
 
-        throw new Error("oof")
-
 
         return NextResponse.json(deleteCommand)
     } catch (error) {
